@@ -44,7 +44,7 @@ def test_missing_table_and_quality_flags():
     assert missing_df.loc["age", "missing_count"] == 1
 
     summary = summarize_dataset(df)
-    flags = compute_quality_flags(summary, missing_df)
+    flags = compute_quality_flags(df, summary, missing_df)
     assert 0.0 <= flags["quality_score"] <= 1.0
 
 
@@ -59,3 +59,30 @@ def test_correlation_and_top_categories():
     city_table = top_cats["city"]
     assert "value" in city_table.columns
     assert len(city_table) <= 2
+
+
+def test_compute_quality_flags_constant_column():
+    df = pd.DataFrame({
+        "id": [1, 2, 3],
+        "feature": [42, 42, 42],
+        "cat": ["A", "B", "C"]
+    })
+    summary = summarize_dataset(df)
+    missing_df = missing_table(df)
+    flags = compute_quality_flags(df, summary, missing_df)
+
+    assert flags["has_constant_columns"] is True
+    assert flags["has_high_cardinality_categoricals"] is False
+
+
+def test_compute_quality_flags_high_cardinality():
+    df = pd.DataFrame({
+        "value": range(60),
+        "cat": [f"category_{i}" for i in range(60)],
+    })
+    summary = summarize_dataset(df)
+    missing_df = missing_table(df)
+    flags = compute_quality_flags(df, summary, missing_df)
+
+    assert flags["has_high_cardinality_categoricals"] is True
+    assert flags["has_constant_columns"] is False
