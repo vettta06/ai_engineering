@@ -56,4 +56,16 @@ uv run eda-cli report data/example.csv --out-dir reports
 
 ```bash
 uv run pytest -q
+
+
+##  Новые функции 
+
+Команда `report` поддерживает дополнительные параметры:
+
+- `--title TEXT` — для создания собственного заголовка отчета
+- `--top-k-categories INT` — для количества топ-значений у категориальных признаков
+
+Пример:
+```bash
+uv run eda-cli report data/example.csv --title "Анализ клиентов" --top-k-categories 3 --out-dir my_report
 ```
