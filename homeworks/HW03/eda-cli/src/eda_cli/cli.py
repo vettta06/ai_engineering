@@ -5,6 +5,7 @@ from typing import Optional
 
 import pandas as pd
 import typer
+import json
 
 from .core import (
     DatasetSummary,
@@ -69,6 +70,7 @@ def report(
     max_hist_columns: int = typer.Option(6, help="Максимум числовых колонок для гистограмм."),
     top_k_categories: int = typer.Option(5, help="Сколько top-значений выводить для категориальных признаков."),
     title: str = typer.Option("EDA-отчёт", help="Заголовок отчёта в report.md."),
+    json_summary: bool = typer.Option(False, "--json-summary", help="Save a compact JSON summary"),
 ) -> None:
     """
     Сгенерировать полный EDA-отчёт:
@@ -145,6 +147,22 @@ def report(
     plot_histograms_per_column(df, out_root, max_columns=max_hist_columns)
     plot_missing_matrix(df, out_root / "missing_matrix.png")
     plot_correlation_heatmap(df, out_root / "correlation_heatmap.png")
+
+    if json_summary:
+        summary = {
+            "n_rows": df.shape[0],
+            "n_cols": df.shape[1],
+            "quality_score": quality_flags.get("quality_score", None),
+            "problematic_columns": {},
+        }
+        for key in ["high_missing_cols", "high_cardinality_cols", "suspicious_id_duplicates"]:
+            if key in quality_flags:
+                summary["problematic_columns"][key] = quality_flags[key]
+        out_path = Path(out_dir)
+        out_path.mkdir(parents=True, exist_ok=True)
+
+        with open(out_path / "summary.json", "w", encoding="utf-8") as f:
+            json.dump(summary, f, indent=2, ensure_ascii=False)
 
     typer.echo(f"Отчёт сгенерирован в каталоге: {out_root}")
     typer.echo(f"- Основной markdown: {md_path}")

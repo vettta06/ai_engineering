@@ -64,10 +64,11 @@ uv run pytest -q
 
 - `--title TEXT` — для создания собственного заголовка отчета
 - `--top-k-categories INT` — для количества топ-значений у категориальных признаков
-
+ `--json-summary` — сохраняет краткую сводку в `summary.json`
 Пример:
 ```bash
 uv run eda-cli report data/example.csv --title "Анализ клиентов" --top-k-categories 3 --out-dir my_report
+uv run eda-cli report data/example.csv --title "Анализ клиентов" --top-k-categories 3 --json-summary --out-dir my_report
 
 
 ### Команда `head`
@@ -76,4 +77,7 @@ uv run eda-cli report data/example.csv --title "Анализ клиентов" -
 
 ```bash
 uv run eda-cli head data/example.csv --n 5
+
+
+
 ```
