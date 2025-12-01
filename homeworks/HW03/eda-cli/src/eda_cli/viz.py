@@ -109,6 +109,52 @@ def plot_correlation_heatmap(df: pd.DataFrame, out_path: PathLike) -> Path:
     return out_path
 
 
+def plot_top_categories_bar (
+    df: pd.DataFrame,
+    output_path: str,
+    categorical_columns: list[str],
+    top_n: int = 10,
+) -> None:
+    """Горизонтальный ar ля самой частой категориальной колонки."""
+    if not categorical_columns:
+        return
+    best = max(categorical_columns, key=lambda col: df[col].notna().sum())
+    value_counts = df[best].value_counts().head(top_n)
+    if value_counts.empty:
+        return
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(value_counts)))
+    fig, ax = plt.subplots(figsize=(10, max(4, len(value_counts) * 0.5)))
+    bars = ax.barh(
+        value_counts.index,
+        value_counts.values,
+        color=colors,
+        edgecolor='none'
+    )
+    for bar in bars:
+        width = bar.get_width()
+        ax.text(
+            width + max(value_counts.values) * 0.01,
+            bar.get_y() + bar.get_height() / 2,
+            f"{int(width)}",
+            va='center',
+            ha='left',
+            fontsize=9
+        )
+    ax.set_xlabel("Count")
+    ax.set_title(f"Top {len(value_counts)} categories in '{best}'", fontsize=12)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.tick_params(left=False)
+    ax.set_facecolor('white')
+    fig.patch.set_facecolor('white')
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    
+
 def save_top_categories_tables(
     top_cats: Dict[str, pd.DataFrame],
     out_dir: PathLike,
@@ -123,3 +169,5 @@ def save_top_categories_tables(
         table.to_csv(out_path, index=False)
         paths.append(out_path)
     return paths
+
+

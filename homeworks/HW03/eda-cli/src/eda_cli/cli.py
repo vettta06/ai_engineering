@@ -21,6 +21,7 @@ from .viz import (
     plot_missing_matrix,
     plot_histograms_per_column,
     save_top_categories_tables,
+    plot_top_categories_bar,
 )
 
 app = typer.Typer(help="Мини-CLI для EDA CSV-файлов")
@@ -147,7 +148,13 @@ def report(
     plot_histograms_per_column(df, out_root, max_columns=max_hist_columns)
     plot_missing_matrix(df, out_root / "missing_matrix.png")
     plot_correlation_heatmap(df, out_root / "correlation_heatmap.png")
-
+    categorical_columns = df.select_dtypes(include=["object", "category"]).columns.tolist()
+    if categorical_columns:
+        category_plot_path = out_root / "category_distribution.png"
+        plot_top_categories_bar(df, str(category_plot_path), categorical_columns, top_n=10)
+        with open(md_path, "a", encoding="utf-8") as f:
+            f.write("\n## Распределение категорий\n\n")
+            f.write(f"![Category Distribution]({category_plot_path.name})\n")
     if json_summary:
         summary = {
             "n_rows": df.shape[0],

@@ -80,4 +80,6 @@ uv run eda-cli head data/example.csv --n 5
 
 
 
+- `category_distribution.png` –  горизонтальный bar-chart с градиентной раскраской для самой частой категориальной колонки.
+
 ```
