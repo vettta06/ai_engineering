@@ -152,5 +152,18 @@ def report(
     typer.echo("- Графики: hist_*.png, missing_matrix.png, correlation_heatmap.png")
 
 
+@app.command()
+def head(
+    filepath: str = typer.Argument(..., help="Path to the input CSV file"),
+    n: int = typer.Option(5, "--n", "-n", help="Number of rows to display"),
+    sep: str = typer.Option(",", "--sep", "-s", help="CSV separator"),
+    encoding: str = typer.Option("utf-8", "--encoding", "-e", help="File encoding"),
+) -> None:
+    """Показывает первые n строк датасета."""
+    df = pd.read_csv(filepath, sep=sep, encoding=encoding)
+    print(df.head(n).to_string())
+
+
+
 if __name__ == "__main__":
     app()

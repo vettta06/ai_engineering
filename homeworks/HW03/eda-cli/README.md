@@ -68,4 +68,12 @@ uv run pytest -q
 Пример:
 ```bash
 uv run eda-cli report data/example.csv --title "Анализ клиентов" --top-k-categories 3 --out-dir my_report
+
+
+### Команда `head`
+
+Показывает первые N строк датасета.
+
+```bash
+uv run eda-cli head data/example.csv --n 5
 ```
