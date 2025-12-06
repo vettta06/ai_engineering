@@ -19,6 +19,11 @@ app = FastAPI(
     redoc_url=None,
 )
 
+_metrics = {
+    "total_requests": 0,
+    "total_latency_ms": 0.0,
+    "last_ok_for_model": None,
+}
 
 # ---------- Модели запросов/ответов ----------
 
@@ -77,6 +82,9 @@ class QualityResponse(BaseModel):
         description="Размеры датасета: {'n_rows': ..., 'n_cols': ...}, если известны",
     )
 
+
+class HeadRequest(BaseModel):
+    n: int = 5
 
 # ---------- Системный эндпоинт ----------
 
@@ -147,8 +155,8 @@ def quality(req: QualityRequest) -> QualityResponse:
     # Примитивный лог — на семинаре можно обсудить, как это превратить в нормальный logger
     print(
         f"[quality] n_rows={req.n_rows} n_cols={req.n_cols} "
-        f"max_missing_share={req.max_missing_share:.3f} "
-        f"score={score:.3f} latency_ms={latency_ms:.1f} ms"
+        f"max_missing_share={req.max_missing_share: .3f} "
+        f"score={score: .3f} latency_ms={latency_ms: .1f} ms"
     )
 
     return QualityResponse(
@@ -198,7 +206,7 @@ async def quality_from_csv(file: UploadFile = File(...)) -> QualityResponse:
     # Используем EDA-ядро из S03
     summary = summarize_dataset(df)
     missing_df = missing_table(df)
-    flags_all = compute_quality_flags(summary, missing_df)
+    flags_all = compute_quality_flags(df, summary, missing_df)
 
     # Ожидаем, что compute_quality_flags вернёт quality_score в [0,1]
     score = float(flags_all.get("quality_score", 0.0))
@@ -211,6 +219,11 @@ async def quality_from_csv(file: UploadFile = File(...)) -> QualityResponse:
         message = "CSV требует доработки перед обучением модели (по текущим эвристикам)."
 
     latency_ms = (perf_counter() - start) * 1000.0
+
+     # Обновляем метрики
+    _metrics["total_requests"] += 1
+    _metrics["total_latency_ms"] += latency_ms
+    _metrics["last_ok_for_model"] = ok_for_model
 
     # Оставляем только булевы флаги для компактности
     flags_bool: dict[str, bool] = {
@@ -230,8 +243,8 @@ async def quality_from_csv(file: UploadFile = File(...)) -> QualityResponse:
 
     print(
         f"[quality-from-csv] filename={file.filename!r} "
-        f"n_rows={n_rows} n_cols={n_cols} score={score:.3f} "
-        f"latency_ms={latency_ms:.1f} ms"
+        f"n_rows={n_rows} n_cols={n_cols} score={score: .3f} "
+        f"latency_ms={latency_ms: .1f} ms"
     )
 
     return QualityResponse(
@@ -242,3 +255,43 @@ async def quality_from_csv(file: UploadFile = File(...)) -> QualityResponse:
         flags=flags_bool,
         dataset_shape={"n_rows": n_rows, "n_cols": n_cols},
     )
+
+
+# Новые endpoint
+@app.post("/head-from-csv", tags=["custom"], summary="Возвращает первые N строк датасета")
+async def head_from_csv(
+        file: UploadFile = File(...),
+        n: int = 5
+) -> dict:
+    """Возвращает первые n строк датасета."""
+
+    if not file.filename.endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files allowed")
+    try:
+        df = pd.read_csv(file.file)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to parse CSV: {str(e)}")
+    if df.empty:
+        raise HTTPException(status_code=400, detail="CSV is empty")
+    head_df = df.head(n)
+    res = head_df.to_dict(orient="records")
+    return {
+        "n_rows_returned": len(res),
+        "data": res,
+        "total_rows": len(df),
+        "columns": list(df.columns),
+    }
+
+
+@app.get("/metrics", tags=["system"], summary="Возвращает статистику по работе сервиса.")
+def metrics() -> dict:
+    """Возвращает статистику по работе сервиса."""
+    if _metrics["total_requests"] == 0:
+        avg_latency = 0.0
+    else:
+        avg_latency = _metrics["total_latency_ms"] / _metrics["total_requests"]
+    return {
+        "total_requests": _metrics["total_requests"],
+        "avg_latency_ms": round(avg_latency, 2),
+        "last_ok_for_model": _metrics["last_ok_for_model"]
+    }
