@@ -1,4 +1,4 @@
-# S03 – eda_cli: мини-EDA для CSV
+# S04 – eda_cli: мини-EDA для CSV
 
 Небольшое CLI-приложение для базового анализа CSV-файлов.
 Используется в рамках Семинара 03 курса «Инженерия ИИ».
@@ -56,7 +56,7 @@ uv run eda-cli report data/example.csv --out-dir reports
 
 ```bash
 uv run pytest -q
-
+```
 
 ##  Новые функции 
 
@@ -69,7 +69,7 @@ uv run pytest -q
 ```bash
 uv run eda-cli report data/example.csv --title "Анализ клиентов" --top-k-categories 3 --out-dir my_report
 uv run eda-cli report data/example.csv --title "Анализ клиентов" --top-k-categories 3 --json-summary --out-dir my_report
-
+```
 
 ### Команда `head`
 
@@ -77,9 +77,47 @@ uv run eda-cli report data/example.csv --title "Анализ клиентов" -
 
 ```bash
 uv run eda-cli head data/example.csv --n 5
-
+```
 
 
 - `category_distribution.png` –  горизонтальный bar-chart с градиентной раскраской для самой частой категориальной колонки.
 
+
+## HTTP API
+
+Проект также предоставляет REST API на базе FastAPI.
+
+### Запуск сервера
+
+```bash
+uv run uvicorn eda_cli.api:app --reload --port 8000
+```
+### Эндпоинты
+
+Проверка работоспособности сервиса.
+
+GET /health
+```bash
+curl http://localhost:8000/health
+```
+
+Оценка качества датасета по CSV-файлу.
+
+POST /quality-from-csv
+```bash
+curl -F "file=@data/example.csv" http://localhost:8000/quality-from-csv
+```
+
+Возвращает первые N строк датасета.
+
+POST /head-from-csv
+```bash
+curl -F "file=@data/example.csv" -F "n=3" http://localhost:8000/head-from-csv
+```
+
+Статистика по работе сервиса.
+
+GET /metrics
+```bash
+curl http://localhost:8000/metrics
 ```
