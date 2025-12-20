@@ -1,0 +1,30 @@
+{
+    "DecisionTree": {
+        "best_params": {
+            "ccp_alpha": 0.0,
+            "max_depth": 8,
+            "min_samples_leaf": 10
+        },
+        "cv_score": 0.8295313970643055
+    },
+    "RandomForest": {
+        "best_params": {
+            "max_depth": null,
+            "max_features": "log2",
+            "min_samples_leaf": 1
+        },
+        "cv_score": 0.9259576979862443
+    },
+    "HistGradientBoosting": {
+        "best_params": {
+            "learning_rate": 0.1,
+            "max_depth": 7,
+            "min_samples_leaf": 50
+        },
+        "cv_score": 0.9305253535984732
+    },
+    "StackingClassifier": {
+        "best_params": "Not applicable (uses base models with their own params)",
+        "cv_score": "Not applicable"
+    }
+}
