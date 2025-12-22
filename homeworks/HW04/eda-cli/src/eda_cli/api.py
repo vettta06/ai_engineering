@@ -6,7 +6,12 @@ import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from pydantic import BaseModel, Field
 
-from .core import compute_quality_flags, missing_table, summarize_dataset
+from .core import (
+    compute_quality_flags,
+    missing_table,
+    summarize_dataset,
+    flatten_summary_for_print
+)
 
 app = FastAPI(
     title="AIE Dataset Quality API",
@@ -273,13 +278,15 @@ async def head_from_csv(
         raise HTTPException(status_code=400, detail=f"Failed to parse CSV: {str(e)}")
     if df.empty:
         raise HTTPException(status_code=400, detail="CSV is empty")
+    summary = summarize_dataset(df)   
+    summary_flat = flatten_summary_for_print(summary)
     head_df = df.head(n)
-    res = head_df.to_dict(orient="records")
     return {
-        "n_rows_returned": len(res),
-        "data": res,
+        "n_rows_returned": len(head_df),
+        "data": head_df.to_dict(orient="records"),
         "total_rows": len(df),
         "columns": list(df.columns),
+        "dataset_summary": summary_flat.to_dict(orient="records"),
     }
 
 
