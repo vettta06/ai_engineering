@@ -1,8 +1,8 @@
-id,acc,epochs,config
-E1,53.13,15,Base
-E2,52.08,15,Dropout
-E3,55.06,15,BatchNorm
-E4,54.48,10,BatchNorm+ES
-O1,49.9,8,Adam_LR_High
-O2,50.4,8,Adam_LR_Low
-O3,52.87,15,SGD_Momentum_WD
+experiment_id,dataset,seed,model_summary,optimizer,lr,momentum,weight_decay,epochs_trained,best_val_accuracy,best_val_loss
+"E1,CIFAR10,42,""Base MLP [256,128,64]"",Adam,0.001,0,0,15,53.13,1.7394139671325684"
+"E2,CIFAR10,42,""MLP+Dropout(0.3) [256,128,64]"",Adam,0.001,0,0,15,52.08,1.3692036758422852"
+"E3,CIFAR10,42,""MLP+BatchNorm [256,128,64]"",Adam,0.001,0,0,15,55.06,1.4686518089294434"
+"E4,CIFAR10,42,""MLP+BatchNorm+EarlyStop [256,128,64]"",Adam,0.001,0,0,10,54.48,1.3445764963150024"
+O1,CIFAR10,42,MLP+Dropout(0.3),Adam,0.1,0,0,8,49.9,1.426946537399292
+O2,CIFAR10,42,MLP+Dropout(0.3),Adam,1e-05,0,0,8,50.4,1.4145287277221679
+O3,CIFAR10,42,MLP+Dropout(0.3),SGD,0.01,0.9,0.0001,15,52.87,1.33621188621521
