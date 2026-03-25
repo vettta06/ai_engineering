@@ -1,0 +1,7 @@
+experiment_id,task,dataset,seed,model_summary,optimizer,lr,epochs_trained,best_val_accuracy,test_accuracy,precision,recall,mean_iou,notes
+C1,classification,STL10,42,SimpleCNN,Adam,0.001,10,59.1,,,,,No augmentations
+C2,classification,STL10,42,SimpleCNN,Adam,0.001,10,38.5,,,,,With augmentations
+C3,classification,STL10,42,ResNet18-HeadOnly,Adam,0.001,10,78.2,,,,,"Frozen backbone, train FC only"
+C4,classification,STL10,42,ResNet18-FineTune,Adam,0.0001,10,87.7,87.1,,,,Fine-tune layer4 + fc
+V1,segmentation,OxfordIIITPet,42,DeepLabV3-ResNet50,N/A (pretrained),N/A,0,,,0.6933597732259866,0.9829719793061834,0.6861778007254513,"Basic post-processing, threshold=0.5"
+V2,segmentation,OxfordIIITPet,42,DeepLabV3-ResNet50,N/A (pretrained),N/A,0,,,0.7736020298243955,0.9122925814458449,0.731679968815165,Threshold=0.7 + remove small components (min_area=100)
