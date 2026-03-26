@@ -1,0 +1,33 @@
+{
+  "experiment_id": "R1",
+  "seed": 42,
+  "input_size": 10,
+  "hidden_size": 64,
+  "num_layers": 2,
+  "dropout": 0.2,
+  "learning_rate": 0.001,
+  "window_size": 24,
+  "horizon": 1,
+  "batch_size": 32,
+  "epochs_trained": 26,
+  "feature_columns": [
+    "lag_1",
+    "lag_7",
+    "lag_14",
+    "rolling_mean_7",
+    "rolling_std_7",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "is_weekend"
+  ],
+  "scaler_features": "StandardScaler",
+  "scaler_target": "StandardScaler",
+  "best_val_mae": 4.894372463226318,
+  "best_val_rmse": 6.336292412127333,
+  "best_val_mape": 3.2371222972869873,
+  "test_mae": 5.733585357666016,
+  "test_rmse": 7.285334018859905,
+  "test_mape": 3.627598762512207
+}
