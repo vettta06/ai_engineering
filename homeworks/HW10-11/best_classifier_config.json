@@ -1,0 +1,10 @@
+{
+  "experiment_id": "C4",
+  "dataset": "STL10",
+  "architecture": "ResNet18-FineTune",
+  "lr": 0.0001,
+  "batch_size": 32,
+  "epochs": 10,
+  "optimizer": "Adam",
+  "seed": 42
+}

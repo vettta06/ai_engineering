@@ -6,5 +6,27 @@
   "batch_size": 32,
   "epochs": 10,
   "optimizer": "Adam",
-  "seed": 42
+  "seed": 42,
+  "transforms": {
+    "train": [
+      "Resize(96)",
+      "CenterCrop(96)",
+      "ToTensor",
+      "Normalize(ImageNet)"
+    ],
+    "val": [
+      "Resize(96)",
+      "CenterCrop(96)",
+      "ToTensor",
+      "Normalize(ImageNet)"
+    ]
+  },
+  "augmentation": {
+    "enabled": false,
+    "transforms": [
+      "RandomResizedCrop",
+      "RandomHorizontalFlip",
+      "ColorJitter"
+    ]
+  }
 }
