@@ -9,7 +9,7 @@
   "window_size": 24,
   "horizon": 1,
   "batch_size": 32,
-  "epochs_trained": 26,
+  "epochs_trained": 21,
   "feature_columns": [
     "lag_1",
     "lag_7",
@@ -24,10 +24,10 @@
   ],
   "scaler_features": "StandardScaler",
   "scaler_target": "StandardScaler",
-  "best_val_mae": 4.894372463226318,
-  "best_val_rmse": 6.336292412127333,
-  "best_val_mape": 3.2371222972869873,
-  "test_mae": 5.733585357666016,
-  "test_rmse": 7.285334018859905,
-  "test_mape": 3.627598762512207
+  "best_val_mae": 4.558462142944336,
+  "best_val_rmse": 5.93650022421539,
+  "best_val_mape": 3.1165008544921875,
+  "test_mae": 5.202617168426514,
+  "test_rmse": 6.840874891042983,
+  "test_mape": 3.418637752532959
 }
