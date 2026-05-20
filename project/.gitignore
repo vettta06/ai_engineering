@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+.venv/
+venv/
+env/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# IDE и ОС
+.vscode/
+.DS_Store
+Thumbs.db
+
+artifacts/*
+!artifacts/README.md
+
+.env
