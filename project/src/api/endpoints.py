@@ -28,19 +28,18 @@ async def health_check(service: ModelService = Depends(get_model_service)):
         status="healthy",
         model_name="Random Forest",
         model_version="1.0.0",
-        ready=service.loaded
+        ready=service.loaded,
     )
 
 
 @router.post("/predict", response_model=PredictionResponse)
 async def predict_risk(
-    application: CreditApplication, 
-    service: ModelService = Depends(get_model_service)
+    application: CreditApplication, service: ModelService = Depends(get_model_service)
 ):
     """Predict credit risk for a given application."""
     try:
         request_counter["total"] += 1
-        
+
         df = pd.DataFrame([application.model_dump()])
         features = df[service.config["features"]]
 
@@ -63,7 +62,7 @@ async def predict_risk(
             prediction_label="High Risk" if result["prediction"] == 1 else "Low Risk",
             probability_high_risk=round(prob_high, 4),
             probability_low_risk=round(prob_low, 4),
-            risk_category=category
+            risk_category=category,
         )
     except Exception as e:
         logger.error("Prediction failed: %s", e)
@@ -74,19 +73,19 @@ async def predict_risk(
 async def get_metrics():
     """Return service metrics and statistics."""
     uptime_seconds = (datetime.utcnow() - service_start_time).total_seconds()
-    
+
     return {
         "service": {
             "uptime_seconds": round(uptime_seconds, 2),
-            "start_time": service_start_time.isoformat()
+            "start_time": service_start_time.isoformat(),
         },
         "requests": {
             "total_predictions": request_counter["total"],
-            "by_risk_category": dict(request_counter["predictions"])
+            "by_risk_category": dict(request_counter["predictions"]),
         },
         "model": {
             "name": "Random Forest",
             "version": "1.0.0",
-            "status": "loaded" if model_service.loaded else "not_loaded"
-        }
+            "status": "loaded" if model_service.loaded else "not_loaded",
+        },
     }
