@@ -1,0 +1,90 @@
+{
+  "timestamp": "2026-05-21T16:55:42.715174",
+  "model_name": "Random Forest",
+  "test_performance": {
+    "roc_auc": 0.9904761904761905,
+    "f1": 0.907563025210084,
+    "accuracy": 0.945,
+    "confusion_matrix": {
+      "true_negatives": 135,
+      "false_positives": 5,
+      "false_negatives": 6,
+      "true_positives": 54
+    }
+  },
+  "sample_predictions": [
+    {
+      "input": {
+        "age": 35,
+        "income": 75000.0,
+        "employment_years": 10,
+        "loan_amount": 25000.0,
+        "credit_score": 720
+      },
+      "output": {
+        "prediction": "Low Risk",
+        "probability_high_risk": 0.0601,
+        "risk_category": "LOW"
+      }
+    },
+    {
+      "input": {
+        "age": 25,
+        "income": 35000.0,
+        "employment_years": 2,
+        "loan_amount": 45000.0,
+        "credit_score": 580
+      },
+      "output": {
+        "prediction": "High Risk",
+        "probability_high_risk": 0.8937,
+        "risk_category": "HIGH"
+      }
+    },
+    {
+      "input": {
+        "age": 50,
+        "income": 120000.0,
+        "employment_years": 20,
+        "loan_amount": 15000.0,
+        "credit_score": 800
+      },
+      "output": {
+        "prediction": "Low Risk",
+        "probability_high_risk": 0.0,
+        "risk_category": "LOW"
+      }
+    },
+    {
+      "input": {
+        "age": 28,
+        "income": 45000.0,
+        "employment_years": 5,
+        "loan_amount": 40000.0,
+        "credit_score": 650
+      },
+      "output": {
+        "prediction": "High Risk",
+        "probability_high_risk": 0.8832,
+        "risk_category": "HIGH"
+      }
+    },
+    {
+      "input": {
+        "age": 60,
+        "income": 95000.0,
+        "employment_years": 30,
+        "loan_amount": 10000.0,
+        "credit_score": 750
+      },
+      "output": {
+        "prediction": "Low Risk",
+        "probability_high_risk": 0.0,
+        "risk_category": "LOW"
+      }
+    }
+  ],
+  "pipeline_ready": true,
+  "validation_schema": "CreditApplication (Pydantic)",
+  "output_schema": "PredictionResponse (Pydantic)"
+}

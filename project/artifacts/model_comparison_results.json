@@ -1,0 +1,33 @@
+{
+  "best_model": "Random Forest",
+  "best_params": {
+    "max_depth": 20,
+    "min_samples_leaf": 1,
+    "min_samples_split": 5,
+    "n_estimators": 100
+  },
+  "cv_mean_roc_auc": 0.9858928571428571,
+  "cv_std": 0.006682167353802015,
+  "cv_95_ci": [
+    0.9727958091294052,
+    0.998989905156309
+  ],
+  "grid_search_best_score": 0.9878809523809524,
+  "feature_importance": {
+    "loan_amount": 0.39374001703249023,
+    "income": 0.29636853100388305,
+    "credit_score": 0.24792856778063832,
+    "age": 0.033830216247200035,
+    "employment_years": 0.028132667935788325
+  },
+  "test_results": {
+    "logistic_regression": {
+      "roc_auc": 0.9852380952380952,
+      "f1": 0.8983050847457628
+    },
+    "random_forest": {
+      "roc_auc": 0.9935119047619048,
+      "f1": 0.9310344827586207
+    }
+  }
+}

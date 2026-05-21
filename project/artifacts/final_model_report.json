@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-05-21T15:11:29.715393",
+  "model_name": "Random Forest",
+  "best_params": {
+    "max_depth": 20,
+    "min_samples_leaf": 1,
+    "min_samples_split": 5,
+    "n_estimators": 100
+  },
+  "cv_results": {
+    "mean_roc_auc": 0.9858928571428571,
+    "std": 0.006682167353802015,
+    "ci_95": [
+      0.9727958091294052,
+      0.998989905156309
+    ],
+    "fold_scores": [
+      0.9810714285714286,
+      0.983452380952381,
+      0.9989880952380952,
+      0.9846428571428572,
+      0.9813095238095237
+    ]
+  },
+  "test_results": {
+    "roc_auc": 0.9935119047619048,
+    "f1": 0.9310344827586207
+  },
+  "feature_importance": {
+    "loan_amount": 0.39374001703249023,
+    "income": 0.29636853100388305,
+    "credit_score": 0.24792856778063832,
+    "age": 0.033830216247200035,
+    "employment_years": 0.028132667935788325
+  },
+  "comparison_with_others": {
+    "logistic_regression": {
+      "roc_auc": 0.9852380952380952,
+      "f1": 0.8983050847457628
+    },
+    "mlp": {
+      "roc_auc": 0.9783333333333333,
+      "f1": 0.8849557522123894
+    }
+  },
+  "features_used": [
+    "age",
+    "income",
+    "employment_years",
+    "loan_amount",
+    "credit_score"
+  ],
+  "scaler": "StandardScaler",
+  "artifacts": {
+    "model_file": "final_model_random_forest.pkl",
+    "scaler_file": "scaler.pkl",
+    "feature_importance_plot": "model_feature_importance.png"
+  }
+}

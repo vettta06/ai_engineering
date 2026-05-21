@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-05-21T14:54:41.696274",
+  "dataset": {
+    "rows": 1000,
+    "columns": 6,
+    "memory_mb": 0.05
+  },
+  "quality": {
+    "missing_values": 0,
+    "duplicates": 0
+  },
+  "target": {
+    "class_0_count": 700,
+    "class_1_count": 300,
+    "class_0_pct": 70.0,
+    "class_1_pct": 30.0,
+    "imbalance_ratio": 2.33
+  },
+  "outliers": {
+    "age": 0,
+    "income": 0,
+    "employment_years": 0,
+    "loan_amount": 0,
+    "credit_score": 0
+  },
+  "top_correlations_with_target": {
+    "loan_amount": 0.515,
+    "age": 0.037,
+    "employment_years": -0.026
+  },
+  "artifacts_saved": [
+    "correlation_matrix.png",
+    "eda_boxplots_outliers.png",
+    "eda_correlation_matrix.png",
+    "eda_numeric_distributions.png",
+    "eda_pairplot_key_features.png",
+    "eda_target_correlation.png",
+    "eda_target_distribution.png",
+    "target_distribution.png",
+    "data_quality_report.json"
+  ]
+}
