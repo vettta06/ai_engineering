@@ -9,7 +9,16 @@ def test_credit_dataset_integrity():
     df = pd.read_csv(data_path)
     assert not df.empty, "Датасет пустой"
     assert len(df) == 1000, f"Ожидалось 1000 строк, получено {len(df)}"
-    required_columns = ['age', 'income', 'employment_years', 'loan_amount', 'credit_score', 'target']
+    required_columns = [
+        "age",
+        "income",
+        "employment_years",
+        "loan_amount",
+        "credit_score",
+        "target",
+    ]
     for col in required_columns:
         assert col in df.columns, f"Отсутствует обязательная колонка: {col}"
-    assert set(df['target'].unique()).issubset({0, 1}), "Колонка target должна содержать только 0 и 1"
+    assert set(df["target"].unique()).issubset(
+        {0, 1}
+    ), "Колонка target должна содержать только 0 и 1"
