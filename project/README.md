@@ -68,7 +68,7 @@
 
 ```bash
 # Перейти в папку проекта
-cd project
+cd ai_engineering/project
 
 # Создать виртуальное окружение (опционально, но рекомендуется)
 python -m venv .venv
@@ -80,7 +80,6 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Установить зависимости
-pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
@@ -90,14 +89,9 @@ pip install -r requirements.txt
 
 ## 4. Как запустить проект
 
-Опишите, как именно воспроизвести основные сценарии использования проекта.
-
-Примеры (заполните под свой случай):
-
 ### 4.1. Запуск обучения модели
 
 Обучение и эксперименты проводятся в Jupyter Notebook. Для воспроизведения результатов и переобучения финальной модели:
-
 
 ```bash
 cd project
@@ -116,7 +110,7 @@ uvicorn src.api.main:app --reload   # пример: FastAPI сервис
 Также можно запустить через Docker:
 
 ```bash
-cd project
+cd ai_engineering/project
 docker build -t credit-scoring-api .
 docker run -p 8000:8000 credit-scoring-api
 ```
@@ -158,7 +152,7 @@ docker run -p 8000:8000 credit-scoring-api
 
 **Запуск всех тестов:**
 ```bash
-cd project
+cd ai_engineering/project
 source .venv/bin/activate      # .venv\Scripts\activate для Windows
 pytest tests/ -v
 ```
