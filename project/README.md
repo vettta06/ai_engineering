@@ -107,7 +107,7 @@ python -m notebook notebooks/02_baseline_models.ipynb
 ```bash
 cd project
 source .venv/bin/activate      # при необходимости
-uvicorn src.api.main:app --reload   # пример: FastAPI сервис
+uvicorn src.api.main:app --reload   # FastAPI сервис
 ```
 
 Также можно запустить через Docker:
