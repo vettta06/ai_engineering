@@ -217,6 +217,7 @@
 - **CI/CD:** GitHub Actions
 
 **Команды для поднятия сервиса:**
+
 ```bash
 # Локальный запуск в режиме разработки
 uvicorn src.api.main:app --reload
