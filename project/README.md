@@ -59,8 +59,11 @@
 
 ### 3.1. Требования
 
-- Python `>= 3.10` (уточните при необходимости).
-- Установленные системные зависимости (если есть: например, `git`, `make` и т.п.).
+- Python `>= 3.10` (проект протестирован на 3.12).
+- `git` для клонирования репозитория.
+- `pip` для установки зависимостей.
+- `notebook` для запуска экспериментов в ноутбуках (устанавливается через `pip install notebook`).
+- (Опционально) `Docker` и `docker-compose`, если планируется запуск в контейнере.netstat -aon | findstr :8000
 
 ### 3.2. Установка окружения
 
@@ -68,7 +71,7 @@
 
 ```bash
 # Перейти в папку проекта
-cd project
+cd ai_engineering/project
 
 # Создать виртуальное окружение (опционально, но рекомендуется)
 python -m venv .venv
@@ -80,7 +83,6 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Установить зависимости
-pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
@@ -97,7 +99,7 @@ pip install -r requirements.txt
 ```bash
 cd project
 source .venv/bin/activate      # при необходимости
-jupyter notebook notebooks/02_baseline_models.ipynb         
+python -m notebook notebooks/02_baseline_models.ipynb
 ```
 
 ### 4.2. Запуск сервиса (API/веб-интерфейс)
@@ -111,7 +113,7 @@ uvicorn src.api.main:app --reload   # пример: FastAPI сервис
 Также можно запустить через Docker:
 
 ```bash
-cd project
+cd ai_engineering/project
 docker build -t credit-scoring-api .
 docker run -p 8000:8000 credit-scoring-api
 ```
@@ -154,7 +156,7 @@ docker run -p 8000:8000 credit-scoring-api
 **Запуск всех тестов:**
 
 ```bash
-cd project
+cd ai_engineering/project
 source .venv/bin/activate      # .venv\Scripts\activate для Windows
 pytest tests/ -v
 ```
