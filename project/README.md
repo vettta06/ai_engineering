@@ -86,7 +86,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Проект не требует настройки внешних секретов или дополнительных системных библиотек. Все параметры хранятся в configs/ в открытом виде..
+Проект не требует настройки внешних секретов или дополнительных системных библиотек. Все параметры хранятся в configs/ в открытом виде.
 
 ---
 
@@ -97,7 +97,7 @@ pip install -r requirements.txt
 Обучение и эксперименты проводятся в Jupyter Notebook. Для воспроизведения результатов и переобучения финальной модели:
 
 ```bash
-cd project
+cd ai_engineering/project
 source .venv/bin/activate      # при необходимости
 python -m notebook notebooks/02_baseline_models.ipynb
 ```
@@ -105,7 +105,7 @@ python -m notebook notebooks/02_baseline_models.ipynb
 ### 4.2. Запуск сервиса (API/веб-интерфейс)
 
 ```bash
-cd project
+cd ai_engineering/project
 source .venv/bin/activate      # при необходимости
 uvicorn src.api.main:app --reload   # FastAPI сервис
 ```
